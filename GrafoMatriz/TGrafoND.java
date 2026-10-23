@@ -132,17 +132,38 @@ public class TGrafoND {
 		// Inicialização do vetor de classes de cores Ci com nenhum vértice e indicador da classe atual de cor k = 1
 		Ci ← vazio (i = 1, ..., n) ; k ← 1;
 		para i ← 1 até n faça // para todos os n vértices vi ϵ V do grafo G
-			LOOP:
-				se N (i) intersecção Ck = vazio então // Se algum vértice da classe atual k não fizer parte dos vizinhos de vi
-					Ck ← Ck uniao { i } // O vértice vi pode ser pintado com a mesma cor da classe k
-				senão
-					k++; goto LOOP; // Caso contrário, vai investigar se vi pertence a próxima classe k++
-				fim-se
-				k ← 1; // Volta para a classe de cor inicial (k = 1) para investigar a qual classe pertence o próximo vértice vi
+		// LOOP:
+			se N (i) intersecção Ck = vazio então // Se algum vértice da classe atual k não fizer parte dos vizinhos de vi
+				Ck ← Ck uniao { i } // O vértice vi pode ser pintado com a mesma cor da classe k
+			senão
+				k++; goto LOOP; // Caso contrário, vai investigar se vi pertence a próxima classe k++
+			fim-se
+			k ← 1; // Volta para a classe de cor inicial (k = 1) para investigar a qual classe pertence o próximo vértice vi
 		fim-para
 	Fim.
 	*/
+	public int[] N(int x){
+		//retorna os vizinhos do nó x
+		int[] vizinhos = new int[n];
+		for(int i = 0; i < n; i++){
+			if(adj[x][i] == 1){
+				vizinhos[i] = adj[x][i];
+			}
+		}
+		return vizinhos;
+	}
 	public void coloracaoSequencial(){
-		
+		// Ci ← vazio (i = 1, ..., n)
+		int[] C = new int[n];
+		for (int j = 0; j < n; j++) {
+    		C[j] = 0;
+		}
+		// k ← 1;
+		int k = 1;
+		// para i ← 1 até n faça
+		for(int i = 1; i<n;i++){
+			//Se N (i) intersecção Ck = vazio então
+			
+		}
 	}
 }
