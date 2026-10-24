@@ -9,17 +9,20 @@ public class TGrafoND {
 	private	int n; // quantidade de vértices
 	private	int m; // quantidade de arestas
 	private	int adj[][]; //matriz de adjacência
+
+	private int cores[]; // vetor cores para exercicio
+
 	// Métodos Públicos
 	public TGrafoND( int n) {  // construtor
 	    this.n = n;
 	    // No início dos tempos não há arestas
 	    this.m = 0; 
 	    // alocação da matriz do TGrafo
-	    this.adj = new int [n][n];
+	    this.adj = new int [n+1][n+1];
 
 	    // Inicia a matriz com zeros
-		for(int i = 0; i< n; i++)
-			for(int j = 0; j< n; j++)
+		for(int i = 1; i< n; i++)
+			for(int j = 1; j<= n; j++)
 				this.adj[i][j]=0;	
 	}
 
@@ -82,43 +85,13 @@ public class TGrafoND {
 		System.out.println("Vértice " + v + " removido com sucesso.");
 	}
 
-    	//calcula e retorna o grau de entrada de um vértice v de um grafo dirigido
-	public int inDegreeND(int v){
-		int degree = 0;
-		for(int i = 0; i < n; i++){
-			if(adj[i][v] == 1){
-				degree++;
-			}
-		}
-		System.out.println("\nGrau de entrada é "+degree);
-		return degree;
-	}
-
-	public int outDegreeND(int v){
-		int degree = 0;
-		for(int i = 0; i < n; i++){
-			if(adj[v][i] == 1){
-				degree++;
-			}
-		}
-		System.out.println("\nGrau de saída é "+degree);
-		return degree;
-	}
-
-	public int degreeND(int v){
-		int entrada = inDegreeND(v);
-		int saida = outDegreeND(v);
-		int degree = (entrada + saida)/2;
-		System.out.println("\nGrau de total é "+degree);
-		return degree;
-	}
 
 	public void showND() {
 	    System.out.println("n: " + n );
 	    System.out.println("m: " + m );
-	    for( int i=0; i < n; i++){
+	    for( int i=1; i <= n; i++){
 	    	System.out.print("\n");
-	        for( int w=0; w < n; w++)
+	        for( int w=1; w <= n; w++)
 	            if(adj[i][w] == 1)
 	            	System.out.print("Adj[" + i + "," + w + "]= 1" + " ");
 	            else System.out.print("Adj[" + i + "," + w + "]= 0" + " ");
@@ -144,38 +117,44 @@ public class TGrafoND {
 	Fim.
 	*/
 	public boolean N(int v, int k){
-		for (int i = 0; i < n; i++) {
+		for (int i = 1; i <= n; i++) {
             // Se existe aresta entre v e i (adj[v][i] == 1) e o vértice i tem a cor k
-            if (adj[v][i] == 1 && colors[i] == k) {
+            if (adj[v][i] == 1 && cores[i] == k) {
                 return true; // Encontrou um vizinho com a mesma cor
             }
         }
         return false;
 	}
-	public void loop(int k, int[] Ck){
-		// para i ← 1 até n faça
-		for(int i = 1; i<n;i++){
-			//Se N (i) intersecção Ck = vazio então
-			if(N(i) ){
-				//Ck ← Ck uniao { i }
-				Ck[i] = k;
-			}else{
-				k++; 
-				//goto LOOP;
-				loop(k);
-			}
-			k=1;
-		}
-	}
 
 	public void coloracaoSequencial(){
-		// Ci ← vazio (i = 1, ..., n)
-		int[] Ck = new int[n];
-		for (int j = 0; j < n; j++) {
-			Ck[j] = 0;
+		cores = new int[n+1]; //Ci ← vazio (i = 1, ..., n) ;
+		int k = 1; //k ← 1;
+
+		// preenche o vetor de cores com 0
+		for(int i = 1; i < n; i++) {
+			cores[i] = 0;
 		}
-		// k ← 1;
-		int k = 1;// primeiro nó
-		loop(k);
+		
+		//para i ← 1 até n faça // para todos os n vértices vi ϵ V do grafo G
+		for (int i = 1; i<= n; i++) {
+			// LOOP:
+			while(true) {
+				if(!N(i, k)) {
+					//Ck ← Ck uniao { i }
+					cores[i] = k;
+					break;
+				} else {
+					k++; //k++; goto LOOP;
+				}
+				
+			}
+			k = 1; //k ← 1;
+		}
+
+		// Impressão do resultado
+			System.out.println("\nColoração sequencial:");
+			for (int i = 1; i <= n; i++) {
+				System.out.println("Vértice " + i + " -> cor " + cores[i]);
+			}
+		}
 	}
-}

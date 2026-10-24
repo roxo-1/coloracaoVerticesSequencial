@@ -1,26 +1,39 @@
 package GrafoMatriz;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
 
 public class TesteGrafoMatriz {
 	public static void main(String args[]) throws IOException {
-		// TGrafoND g = new TGrafoND(4);
-		// g.insereAND(0 , 1);
-		// g.insereAND(0,2);
-		// g.insereAND(2,1);
-		// g.insereAND(2,3);
-		// g.insereAND(1,3);
-		// g.degreeND(3);
-		// g.showND();
-		// g.completoND();
-		// g.removeVND(0);
-		// g.showND();
-		// g.completoND();
-		// g.conexidadeND();
+		TGrafoND g = new TGrafoND(5);
+		g.insereAND(1 , 2);
+		g.insereAND(1,5);
+		g.insereAND(2,3);
+		g.insereAND(2,4);
+		g.insereAND(3,4);
+		g.insereAND(4,5);
+		g.showND();
+		g.coloracaoSequencial();
+
+
+
+		TGrafoND g2 = new TGrafoND(9);
+		g2.insereAND(1, 6); // A-F
+		g2.insereAND(1, 7); // A-G
+		g2.insereAND(1, 9); // A-I
+		g2.insereAND(2, 3); // B-C
+		g2.insereAND(2, 8); // B-H
+		g2.insereAND(3, 5); // C-E
+		g2.insereAND(3, 8); // C-H
+		g2.insereAND(4, 5); // D-E
+		g2.insereAND(4, 6); // D-F
+		g2.insereAND(4, 8); // D-H
+		g2.insereAND(5, 7); // E-G
+		g2.insereAND(6, 7); // F-G
+		g2.insereAND(6, 9); // F-I
+		g2.insereAND(7, 8); // G-H
+		g2.insereAND(7, 9); // G-I
+		g2.showND();
+		g2.coloracaoSequencial();
 	}	
 }
