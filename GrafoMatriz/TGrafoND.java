@@ -130,7 +130,8 @@ public class TGrafoND {
 	Algoritmo de coloracao sequencial
 	Início <dados: Grafo G = (V, E) >
 		// Inicialização do vetor de classes de cores Ci com nenhum vértice e indicador da classe atual de cor k = 1
-		Ci ← vazio (i = 1, ..., n) ; k ← 1;
+		Ci ← vazio (i = 1, ..., n) ;
+		k ← 1;
 		para i ← 1 até n faça // para todos os n vértices vi ϵ V do grafo G
 		// LOOP:
 			se N (i) intersecção Ck = vazio então // Se algum vértice da classe atual k não fizer parte dos vizinhos de vi
@@ -142,28 +143,39 @@ public class TGrafoND {
 		fim-para
 	Fim.
 	*/
-	public int[] N(int x){
-		//retorna os vizinhos do nó x
-		int[] vizinhos = new int[n];
-		for(int i = 0; i < n; i++){
-			if(adj[x][i] == 1){
-				vizinhos[i] = adj[x][i];
-			}
-		}
-		return vizinhos;
+	public boolean N(int v, int k){
+		for (int i = 0; i < n; i++) {
+            // Se existe aresta entre v e i (adj[v][i] == 1) e o vértice i tem a cor k
+            if (adj[v][i] == 1 && colors[i] == k) {
+                return true; // Encontrou um vizinho com a mesma cor
+            }
+        }
+        return false;
 	}
-	public void coloracaoSequencial(){
-		// Ci ← vazio (i = 1, ..., n)
-		int[] C = new int[n];
-		for (int j = 0; j < n; j++) {
-    		C[j] = 0;
-		}
-		// k ← 1;
-		int k = 1;
+	public void loop(int k, int[] Ck){
 		// para i ← 1 até n faça
 		for(int i = 1; i<n;i++){
 			//Se N (i) intersecção Ck = vazio então
-			
+			if(N(i) ){
+				//Ck ← Ck uniao { i }
+				Ck[i] = k;
+			}else{
+				k++; 
+				//goto LOOP;
+				loop(k);
+			}
+			k=1;
 		}
+	}
+
+	public void coloracaoSequencial(){
+		// Ci ← vazio (i = 1, ..., n)
+		int[] Ck = new int[n];
+		for (int j = 0; j < n; j++) {
+			Ck[j] = 0;
+		}
+		// k ← 1;
+		int k = 1;// primeiro nó
+		loop(k);
 	}
 }
